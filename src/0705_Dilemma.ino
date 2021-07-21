@@ -111,167 +111,175 @@ void loop() {
     // esp 32 받는 코드는 link 파일에 있고
     // esp 32 보내는 코드는 output에 있다.
     // 안드로이드에서 보내는 스트링은 #ISC,1,1,1,1, 마지막에 쉽표 붙여야 함.
-    // comwrite.com_esp32(p1, /*어느 태블릿에 보낼지*/1, /*무엇을 보낼지*/1, 1,1,1,1);
+    comwrite.wait(p1, 4000); p1++;
+    comwrite.com_esp32(p1, 1,1, 1,1,1,1); p1++;
+    comwrite.wait(p1, 4000); p1++;
+    comwrite.com_esp32(p1, 2,1, 1,1,1,1); p1++;
+    comwrite.finish(p1, false);
 
-    comwrite.wait(p1, 30000); p1++;
-    /*원본코드*/comwrite.com_relay_raw(p1, 2, D_RELAY_SET_7, S_RELAY_ON, read_data_list[0],1,1,1); p1++; // 벽조명 켜짐 
-/* 1 */comwrite.com_sound_ch_raw(p1, 1, 0b00000001, 1, 1, 1, 1); p1++; // 라운지 스피커 켜기
-/* 2 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 1, 1,1,1,1); p1++; // BGM1 시작 
+                    //     comwrite.wait(p1, 30000); p1++;
+                    //     /*원본코드*/comwrite.com_relay_raw(p1, 2, D_RELAY_SET_7, S_RELAY_ON, read_data_list[0],1,1,1); p1++; // 벽조명 켜짐 
+                    // /* 1 */comwrite.com_sound_ch_raw(p1, 1, 0b00000001, 1, 1, 1, 1); p1++; // 라운지 스피커 켜기
+                    // /* 2 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 1, 1,1,1,1); p1++; // BGM1 시작 
 
-    // B   /   휴대폰 상자의 자석스위치 닫아서 / LOW
-    /*점프더미*/ comwrite.com_relay_raw(p1, 1, D_RELAY_SET_1, S_RELAY_ON, read_data_list[DUMMYJUMP],1,1,1); p1++;
-/* 3 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_1, S_RELAY_ON, read_data_list[1],1,1,1); p1++; // 이엠락 1번 잠김 
-/* 4 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_8, S_RELAY_ON, 1,1,1,1);  p1++; // 라운지 홀조명 두개 켜짐
-/* 5 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_7, S_RELAY_OFF, 1,1,1,1);  p1++; // 라운지 벽조명 꺼짐
-/* 6 */comwrite.com_sound(p1, 1, D_MUSIC_EVENT + 2, 1,1,1,1);  p1++; // 라운지 스피커에서 따르릉 네~입니다 소리 들림 --------- !!!!!!!!!!!!!!!!이벤트 코드 필요!!!!!!!!!!!!!!!!
-/* 7 */comwrite.com_sound(p1, 1, D_MUSIC_EVENT + 2, 1,1,1,1);  p1++; // 라운지 스피커에서 따르릉 네~입니다 소리 들림 --------- !!!!!!!!!!!!!!!!이벤트 코드 필요!!!!!!!!!!!!!!!!
-/* 8 */comwrite.wait(p1, 2000); p1++; // 이벤트 기다리기
-/* 9 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_2, S_RELAY_OFF, 1,1,1,1);  p1++; // 멘트 끝나면, 엔틱 이엠락 2 열림 ((((놓침))))  
+                    //     // B   /   휴대폰 상자의 자석스위치 닫아서 / LOW
+                    //     /*점프더미*/ comwrite.com_relay_raw(p1, 1, D_RELAY_SET_1, S_RELAY_ON, read_data_list[DUMMYJUMP],1,1,1); p1++;
+                    // /* 3 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_1, S_RELAY_ON, read_data_list[1],1,1,1); p1++; // 이엠락 1번 잠김 
+                    // /* 4 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_8, S_RELAY_ON, 1,1,1,1);  p1++; // 라운지 홀조명 두개 켜짐
+                    // /* 5 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_7, S_RELAY_OFF, 1,1,1,1);  p1++; // 라운지 벽조명 꺼짐
+                    // /* 6 */comwrite.com_sound(p1, 1, D_MUSIC_EVENT + 2, 1,1,1,1);  p1++; // 라운지 스피커에서 따르릉 네~입니다 소리 들림 --------- !!!!!!!!!!!!!!!!이벤트 코드 필요!!!!!!!!!!!!!!!!
+                    // /* 7 */comwrite.com_sound(p1, 1, D_MUSIC_EVENT + 2, 1,1,1,1);  p1++; // 라운지 스피커에서 따르릉 네~입니다 소리 들림 --------- !!!!!!!!!!!!!!!!이벤트 코드 필요!!!!!!!!!!!!!!!!
+                    // /* 8 */comwrite.wait(p1, 2000); p1++; // 이벤트 기다리기
+                    // /* 9 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_2, S_RELAY_OFF, 1,1,1,1);  p1++; // 멘트 끝나면, 엔틱 이엠락 2 열림 ((((놓침))))  
 
-    // C   /   가정용 기성품 스위치를 켜면 / ????
-    //comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_1, S_MOTOR_OPEN, read_data_list[DUMMYJUMP],1,1,1);  p1++;// 강가문 열린다.
-/* 10 */comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_1, S_MOTOR_OPEN, read_data_list[2],1,1,1);  p1++;// 강가문 열린다.
-/* 11 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_8, S_RELAY_OFF, 1,1,1,1); p1++;// 라운지 홀조명 두 개 오프
-/* 12 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_2, S_RELAY_ON, 1,1,1,1); p1++;// 강가 태양 조명 ON
-/* 13 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 2, 1,1,1,1); p1++;// 강가 스피커에서 나올 BGM2 켜기
-/* 14 */comwrite.com_sound_ch_raw(p1, 1, 0b00010000, 1, 1, 1, 1); p1++;// 라운지 스피커 오프 & 강가 스피커 ON 
-    
+                    //     // C   /   가정용 기성품 스위치를 켜면 / ????
+                    //     //comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_1, S_MOTOR_OPEN, read_data_list[DUMMYJUMP],1,1,1);  p1++;// 강가문 열린다.
+                    // /* 10 */comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_1, S_MOTOR_OPEN, read_data_list[2],1,1,1);  p1++;// 강가문 열린다.
+                    // /* 11 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_8, S_RELAY_OFF, 1,1,1,1); p1++;// 라운지 홀조명 두 개 오프
+                    // /* 12 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_2, S_RELAY_ON, 1,1,1,1); p1++;// 강가 태양 조명 ON
+                    // /* 13 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 2, 1,1,1,1); p1++;// 강가 스피커에서 나올 BGM2 켜기
+                    // /* 14 */comwrite.com_sound_ch_raw(p1, 1, 0b00010000, 1, 1, 1, 1); p1++;// 라운지 스피커 오프 & 강가 스피커 ON 
+                        
 
-    //태블릿 있음
+                    //     //태블릿 있음
 
-    // D   /   강가자물쇠 풀고 기성품 스위치 켜기 / ???? 
-    //comwrite.com_sound(p1, 1, D_MUSIC_BGM + 1, read_data_list[DUMMYJUMP],1,1,1); p1++;//bgm은 1번으로 
-/* 15 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 1, read_data_list[3],1,1,1); p1++;//bgm은 1번으로     
-/* 16 */comwrite.com_sound_ch_raw(p1, 1, 0b00000001, 1,1,1,1); p1++;// C의 강가 스피커는 끄고 라운지 스피커는 켜기
-/* 17 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_2, S_RELAY_OFF/*OFF로 바꿀 것!!!!*/, 1,1,1,1); p1++; // C의 강가 태양조명 꺼짐 !!!!!!!@#!@#!@#!# 5/29 공사용으로 항상 켜짐
-/* 18 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_8, S_RELAY_ON, 1,1,1,1); p1++; // C의 라운지 홀조명 두 개 켜짐
-/* 19 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_1, S_RELAY_OFF, 1,1,1,1); p1++; // B의 이엠1번이 열린다.
-/* 20 */comwrite.wait(p1, 10000); p1++; // 10초 딜레이 
-/* 21 */comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_1, S_MOTOR_CLOSE/*CLOSE로 바꿀 것!!!!*/, 1,1,1,1); p1++; // 강가 문 닫힘 !!!!!!!@#!@#!@#!# 5/29 공사용으로 항상 열림
- 
-    /////// E (삭제된 시퀀스임)
+                    //     // D   /   강가자물쇠 풀고 기성품 스위치 켜기 / ???? 
+                    //     //comwrite.com_sound(p1, 1, D_MUSIC_BGM + 1, read_data_list[DUMMYJUMP],1,1,1); p1++;//bgm은 1번으로 
+                    // /* 15 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 1, read_data_list[3],1,1,1); p1++;//bgm은 1번으로     
+                    // /* 16 */comwrite.com_sound_ch_raw(p1, 1, 0b00000001, 1,1,1,1); p1++;// C의 강가 스피커는 끄고 라운지 스피커는 켜기
+                    // /* 17 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_2, S_RELAY_OFF/*OFF로 바꿀 것!!!!*/, 1,1,1,1); p1++; // C의 강가 태양조명 꺼짐 !!!!!!!@#!@#!@#!# 5/29 공사용으로 항상 켜짐
+                    // /* 18 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_8, S_RELAY_ON, 1,1,1,1); p1++; // C의 라운지 홀조명 두 개 켜짐
+                    // /* 19 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_1, S_RELAY_OFF, 1,1,1,1); p1++; // B의 이엠1번이 열린다.
+                    // /* 20 */comwrite.wait(p1, 10000); p1++; // 10초 딜레이 
+                    // /* 21 */comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_1, S_MOTOR_CLOSE/*CLOSE로 바꿀 것!!!!*/, 1,1,1,1); p1++; // 강가 문 닫힘 !!!!!!!@#!@#!@#!# 5/29 공사용으로 항상 열림
+                    
+                    //     /////// E (삭제된 시퀀스임)
 
-    // F   /   라운지 중국 비디오 꺼지면 / LOW
-    //comwrite.com_relay_raw(p1, 2, D_RELAY_SET_5, S_RELAY_ON, read_data_list[DUMMYJUMP],1,1,1); p1++; //라운지 LED바 (초기값)OFF -> ON
-/* 22 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_5, S_RELAY_ON, read_data_list[0],1,1,1); p1++; //라운지 LED바 (초기값)OFF -> ON
-/* 23 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 3, 1,1,1,1); p1++; //라운지 스피커 음악 변경 BGM1이 -> BGM3으로 변경
-/* 24 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_6, S_RELAY_ON, 1,1,1,1); p1++;//라운지 가장 안쪽 원탁등 (초기값 OFF)->켜짐
-/* 25 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_3, S_RELAY_OFF, 1,1,1,1); p1++; //원탁등 왼쪽에 있는 이엠락 3번이 (초기값 닫힘) -> /*  */
-    ////// G (중국시퀀스이므로 생략)
+                    //     // F   /   라운지 중국 비디오 꺼지면 / LOW
+                    //     //comwrite.com_relay_raw(p1, 2, D_RELAY_SET_5, S_RELAY_ON, read_data_list[DUMMYJUMP],1,1,1); p1++; //라운지 LED바 (초기값)OFF -> ON
+                    // /* 22 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_5, S_RELAY_ON, read_data_list[0],1,1,1); p1++; //라운지 LED바 (초기값)OFF -> ON
+                    // /* 23 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 3, 1,1,1,1); p1++; //라운지 스피커 음악 변경 BGM1이 -> BGM3으로 변경
+                    // /* 24 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_6, S_RELAY_ON, 1,1,1,1); p1++;//라운지 가장 안쪽 원탁등 (초기값 OFF)->켜짐
+                    // /* 25 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_3, S_RELAY_OFF, 1,1,1,1); p1++; //원탁등 왼쪽에 있는 이엠락 3번이 (초기값 닫힘) -> /*  */
+                    //     ////// G (중국시퀀스이므로 생략)
 
-    // H   /   중국 IC5구 / LOW
-    //comwrite.com_relay_raw(p1, 2, D_RELAY_SET_6, S_RELAY_OFF, read_data_list[DUMMYJUMP],1,1,1); p1++; // 원탁등 꺼짐
-/* 26 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_6, S_RELAY_OFF, read_data_list[6],1,1,1); p1++; // 원탁등 꺼짐
-/* 27 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_8, S_RELAY_OFF, 1,1,1,1); p1++; // C의 라운지 홀조명 두 개 꺼짐
-/* 28 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_5, S_RELAY_OFF, 1,1,1,1); p1++; // F2에서 켜진 LED바가 뚝 꺼진다.
-/* 29 */comwrite.com_sound_ch_raw(p1, 1, 0b00000000, 1,1,1,1); p1++;// 라운지 BGM3스피커 꺼짐
-    // 중국 비디오가 중국 비디오 스위치에 의해 재생된다.  
-    //comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_2, S_MOTOR_OPEN, read_data_list[DUMMYJUMP],1,1,1); p1++;// ((##162번줄의 레거시코드임##))중국 영상 끝나면, 2차 HIGH -> LOW 받아서, 라운지 대형 액추에이터 축소되어있던게 확장된다. 
-/* 30 */comwrite.wait(p1, 130000); p1++; //중국영상 나오는 동안 기다림
-/* 31 */comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_2, S_MOTOR_OPEN, 1,1,1,1); p1++;// 중국 영상 중간쯤에, 라운지 대형 액추에이터 캡슐방 열어줌
-/* 32 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 4, 1,1,1,1); p1++; // BGM4 준비
-/* 33 */comwrite.com_sound_ch_raw(p1, 1, 0b00000010, 1,1,1,1); p1++;// 캡슐호텔방 천장 스피커 BGM4번 켜짐
-/* 34 */comwrite.wait(p1, 30000); p1++; 
-/* 35 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_8, S_RELAY_ON, 1,1,1,1); p1++; // C의 라운지 홀조명 두 개 켜짐
+                    //     // H   /   중국 IC5구 / LOW
+                    //     //comwrite.com_relay_raw(p1, 2, D_RELAY_SET_6, S_RELAY_OFF, read_data_list[DUMMYJUMP],1,1,1); p1++; // 원탁등 꺼짐
+                    // /* 26 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_6, S_RELAY_OFF, read_data_list[6],1,1,1); p1++; // 원탁등 꺼짐
+                    // /* 27 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_8, S_RELAY_OFF, 1,1,1,1); p1++; // C의 라운지 홀조명 두 개 꺼짐
+                    // /* 28 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_5, S_RELAY_OFF, 1,1,1,1); p1++; // F2에서 켜진 LED바가 뚝 꺼진다.
+                    // /* 29 */comwrite.com_sound_ch_raw(p1, 1, 0b00000000, 1,1,1,1); p1++;// 라운지 BGM3스피커 꺼짐
+                    //     // 중국 비디오가 중국 비디오 스위치에 의해 재생된다.  
+                    //     //comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_2, S_MOTOR_OPEN, read_data_list[DUMMYJUMP],1,1,1); p1++;// ((##162번줄의 레거시코드임##))중국 영상 끝나면, 2차 HIGH -> LOW 받아서, 라운지 대형 액추에이터 축소되어있던게 확장된다. 
+                    // /* 30 */comwrite.wait(p1, 130000); p1++; //중국영상 나오는 동안 기다림
+                    // /* 31 */comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_2, S_MOTOR_OPEN, 1,1,1,1); p1++;// 중국 영상 중간쯤에, 라운지 대형 액추에이터 캡슐방 열어줌
+                    // /* 32 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 4, 1,1,1,1); p1++; // BGM4 준비
+                    // /* 33 */comwrite.com_sound_ch_raw(p1, 1, 0b00000010, 1,1,1,1); p1++;// 캡슐호텔방 천장 스피커 BGM4번 켜짐
+                    // /* 34 */comwrite.wait(p1, 30000); p1++; 
+                    // /* 35 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_8, S_RELAY_ON, 1,1,1,1); p1++; // C의 라운지 홀조명 두 개 켜짐
 
 
-    ///// I (중국시퀀스이므로 생략)
+                    //     ///// I (중국시퀀스이므로 생략)
 
-    // J   /   말풍선 서랍 자석스위치 떨어지면 / HIGH
-    //comwrite.com_relay_raw(p1, 2, D_RELAY_SET_1, S_RELAY_ON, read_data_list[DUMMYSTUCK],1,1,1); p1++; // 더미
-/* 36 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_1, S_RELAY_ON, read_data_list[7],1,1,1); p1++; // 더미
-    // ESP8266 내 장비가 태블릿에 신호를 준다.
-    // 캡슐방 태블릿 (초기값)대기화면이 검정색임 -> 켜짐
+                    //     // J   /   말풍선 서랍 자석스위치 떨어지면 / HIGH
+                    //     //comwrite.com_relay_raw(p1, 2, D_RELAY_SET_1, S_RELAY_ON, read_data_list[DUMMYSTUCK],1,1,1); p1++; // 더미
+                    // /* 36 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_1, S_RELAY_ON, read_data_list[7],1,1,1); p1++; // 더미
+                    //     // 장비가 태블릿에 신호를 준다.    ---------------------<<----------------------------------<<-----------------------------------태블릿--------------<<------------------------<<---------------------
+                    //     // 캡슐방 태블릿 (초기값)대기화면이 검정색임 -> 켜짐
+                    //     comwrite.com_esp32(p1, 1/*1 캡슐 태블릿*/, 1/*활성화 해라*/, 1/*조건*/,1,1,1); p1++;
 
-    // K   /   중국 시계 맞추면 / LOW
-    // comwrite.com_relay_raw(p1, 1, D_RELAY_SET_4, S_RELAY_OFF, read_data_list[DUMMYJUMP],1,1,1); p1++;// 캡슐호텔 네 칸 중 1층 우측 칸, 서랍에 이엠락 닫혀있다가 열림.
-/* 37 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_4, S_RELAY_OFF, read_data_list[8],1,1,1); p1++;// 캡슐호텔 네 칸 중 1층 우측 칸, 서랍에 이엠락 닫혀있다가 열림.
-/* 38 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_OFF, 1,1,1,1); p1++; // 캡슐호텔 LED 1개 (초기값 켜져있던 거) 꺼짐, 테마 입구와 가까운 쪽만 꺼짐. 
+                    //     // K   /   중국 시계 맞추면 / LOW
+                    //     // comwrite.com_relay_raw(p1, 1, D_RELAY_SET_4, S_RELAY_OFF, read_data_list[DUMMYJUMP],1,1,1); p1++;// 캡슐호텔 네 칸 중 1층 우측 칸, 서랍에 이엠락 닫혀있다가 열림.
+                    // /* 37 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_4, S_RELAY_OFF, read_data_list[8],1,1,1); p1++;// 캡슐호텔 네 칸 중 1층 우측 칸, 서랍에 이엠락 닫혀있다가 열림.
+                    // /* 38 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_OFF, 1,1,1,1); p1++; // 캡슐호텔 LED 1개 (초기값 켜져있던 거) 꺼짐, 테마 입구와 가까운 쪽만 꺼짐. 
 
-    // L   /   골목 좌측 입구 자석스위치 열리면 / HIGH
-    // 골목 좌측 입구의 자석스위치가 초기값은 닫혀있음.
-    // 아날로그 퍼즐을 풀면 자석스위치가 열리면,
-    // 자석스위치 닫히면, ((정리하면, 자석스위치 HIGH -> LOW -> HIGH ))
-/*39  */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_1, S_RELAY_ON, read_data_list[15],1,1,1); p1++; // 좌측 입구 닫힘(초기값) (릴레이2-1은 더미)
-    // comwrite.com_relay_raw(p1, 2, D_RELAY_SET_1, S_RELAY_ON, read_data_list[DUMMYJUMP],1,1,1); p1++;// 좌측 입구 스위치 열림이면 (더미)
-/* 40 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_1, S_RELAY_ON, read_data_list[9],1,1,1); p1++;// 좌측 입구 스위치 열림이면 (더미)
-/* 41 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_5, S_RELAY_ON, 1,1,1,1); p1++;// 좌측 입구 이엠 닫고
-/* 42 */comwrite.com_sound_ch_raw(p1, 1, 0b00000100, read_data_list[15],1,1,1); p1++;//좌측 입구 다시 닫히면, 캡슐의 스피커 꺼지고 펍스피커 켜짐
-/* 43 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 5, 1,1,1,1); p1++; //펍의 스피커에서 BGM5이 나옴
+                    //     // L   /   골목 좌측 입구 자석스위치 열리면 / HIGH
+                    //     // 골목 좌측 입구의 자석스위치가 초기값은 닫혀있음.
+                    //     // 아날로그 퍼즐을 풀면 자석스위치가 열리면,
+                    //     // 자석스위치 닫히면, ((정리하면, 자석스위치 HIGH -> LOW -> HIGH ))
+                    // /*39  */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_1, S_RELAY_ON, read_data_list[15],1,1,1); p1++; // 좌측 입구 닫힘(초기값) (릴레이2-1은 더미)
+                    //     // comwrite.com_relay_raw(p1, 2, D_RELAY_SET_1, S_RELAY_ON, read_data_list[DUMMYJUMP],1,1,1); p1++;// 좌측 입구 스위치 열림이면 (더미)
+                    // /* 40 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_1, S_RELAY_ON, read_data_list[9],1,1,1); p1++;// 좌측 입구 스위치 열림이면 (더미)
+                    // /* 41 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_5, S_RELAY_ON, 1,1,1,1); p1++;// 좌측 입구 이엠 닫고
+                    // /* 42 */comwrite.com_sound_ch_raw(p1, 1, 0b00000100, read_data_list[15],1,1,1); p1++;//좌측 입구 다시 닫히면, 캡슐의 스피커 꺼지고 펍스피커 켜짐
+                    // /* 43 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 5, 1,1,1,1); p1++; //펍의 스피커에서 BGM5이 나옴
 
-    ////// 중국시퀀스 혹은 생략 M,N,O
+                    //     ////// 중국시퀀스 혹은 생략 M,N,O
 
-    // O `   /   펍 상자 안 기성품스위치 / ????
-    // 앱에서 나온 힌트로, 상자 퍼즐을 풀어서, 그 안에 들어있던 기성품 스위치를 OFF->ON
-    // 펍 태블릿이 신호를 받는다.
-    
-    // P   /   골목 창문 열면 (오류있음 무조건 실행)
-    // comwrite.com_relay_raw(p1, 2, D_RELAY_SET_1, S_RELAY_OFF, read_data_list[DUMMYJUMP],1,1,1); p1++; // 더미
-/* 44 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_1, S_RELAY_OFF, read_data_list[14],1,1,1); p1++; // 더미
-/* 45 */comwrite.com_sound_ch_raw(p1, 1, 0b000001010, 1,1,1,1); p1++; // 펍 스피커 끄고, 캡슐방스피커와 골목쪽스피커 bgm 6
-/* 46 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 6, 1,1,1,1); p1++; // bgm 6번 켜기 //
+                    //     // O `   /   펍 상자 안 기성품스위치 / ????
+                    //     // 앱에서 나온 힌트로, 상자 퍼즐을 풀어서, 그 안에 들어있던 기성품 스위치를 OFF->ON
+                    //     // 펍 태블릿이 신호를 받는다.
+                    //     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!상자 안 기성품 스위치가 장비에 연결되지 않은 것 같음!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    //     //---------------------<<----------------------------------<<-----------------------------------태블릿--------------<<------------------------<<-------------------------------<<-------------------
+                    //     comwrite.com_esp32(p1, 2/*C 펍 태블릿*/, /*무엇을 보낼지*/1, 1/*조건*/,1,1,1); p1++;
+                        
+                    //     // P   /   골목 창문 열면 (오류있음 무조건 실행)
+                    //     // comwrite.com_relay_raw(p1, 2, D_RELAY_SET_1, S_RELAY_OFF, read_data_list[DUMMYJUMP],1,1,1); p1++; // 더미
+                    // /* 44 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_1, S_RELAY_OFF, read_data_list[14],1,1,1); p1++; // 더미
+                    // /* 45 */comwrite.com_sound_ch_raw(p1, 1, 0b000001010, 1,1,1,1); p1++; // 펍 스피커 끄고, 캡슐방스피커와 골목쪽스피커 bgm 6
+                    // /* 46 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 6, 1,1,1,1); p1++; // bgm 6번 켜기 //
 
-    // Q   /   골목 IC5구 / LOW // 오류있음: LOW든 HIGH든 상관없이 실행됨
-/* 47 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_6, S_RELAY_OFF, read_data_list[11],1,1,1); p1++; // 골목 우측 입구 이엠락7번 (초기값닫혀있던게) 열림
+                    //     // Q   /   골목 IC5구 / LOW // 오류있음: LOW든 HIGH든 상관없이 실행됨
+                    // /* 47 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_6, S_RELAY_OFF, read_data_list[11],1,1,1); p1++; // 골목 우측 입구 이엠락7번 (초기값닫혀있던게) 열림
 
-    // R   /   캡슐 2층 우측 IC3구 / HIGH뜨면 // 오류있음 : 뽑았다 끼웠다 해줘야 실행됨 LOW든 HIGH든
-/* 48 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_OFF, read_data_list[10],1,1,1); p1++; // 캡슐 LED바 테마 입구에서 먼 쪽 1개 꺼짐.
-/* 49 */comwrite.wait(p1, 20000); p1++; // 딜레이 20초
-/* 50 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_ON, 1,1,1,1); p1++;// 캡슐 LED바 2개가 깜빡 깜빡 
-/* 51 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_ON, 1,1,1,1); p1++;
-/* 52 */comwrite.wait(p1, 1600);p1++;
-/* 53 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_OFF, 1,1,1,1); p1++;
-/* 54 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_OFF, 1,1,1,1); p1++;
-/* 55 */comwrite.wait(p1, 1600);p1++;
-/* 56 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_ON, 1,1,1,1); p1++;
-/* 57 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_ON, 1,1,1,1); p1++;
-/* 58 */comwrite.wait(p1, 1600);p1++;
-/* 59 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_OFF, 1,1,1,1); p1++;
-/* 60 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_OFF, 1,1,1,1); p1++;
-/* 61 */comwrite.wait(p1, 1600);p1++;
-/* 62 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_ON, 1,1,1,1); p1++;// 캡슐 LED바 2개가 깜빡 깜빡 
-/* 63 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_ON, 1,1,1,1); p1++;
-/* 64 */comwrite.wait(p1, 1600);p1++;
-/* 65 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_OFF, 1,1,1,1); p1++;
-/* 66 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_OFF, 1,1,1,1); p1++;
-/* 67 */comwrite.wait(p1, 1600);p1++;
-/* 68 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_ON, 1,1,1,1); p1++;
-/* 69 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_ON, 1,1,1,1); p1++;
-/* 70 */comwrite.wait(p1, 1600);p1++;
-/* 71 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_OFF, 1,1,1,1); p1++;
-/* 72 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_OFF, 1,1,1,1); p1++;
-/* 73 */comwrite.wait(p1, 1600);p1++;
-/* 74 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_ON, 1,1,1,1); p1++;
-/* 75 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_ON, 1,1,1,1); p1++;
-/* 76 */comwrite.wait(p1, 1600);p1++;
-/* 77 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_OFF, 1,1,1,1); p1++;
-/* 78 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_OFF, 1,1,1,1); p1++; 
-    // 키패드 여기임
-    ////// S  / 로비 비디오센서 2차가 신호를 주면 작동(문제없음)
-/* 79 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_7, S_RELAY_OFF, read_data_list[0],1,1,1); p1++; // 2층 좌측 캡슐방의 서랍 em 열기
-    // comwrite.com_relay_raw(p1, 1, D_RELAY_SET_7, S_RELAY_OFF, read_data_list[DUMMYJUMP],1,1,1); p1++; // 2층 좌측 캡슐방의 서랍 em 열기
-/* 80 */comwrite.com_sound_ch_raw(p1, 1, 0b00000000, 1,1,1,1); p1++; //캡슐 BGM6번을 끄는 의미로 스피커를 전부 끈다. 
-    // T   /   캡슐 2층 좌측 방에 있는 가정용 스위치 / ????
-/* 81 */comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_2, S_MOTOR_CLOSE, read_data_list[12],1,1,1); p1++; // 캡슐의 중국 영상 끝나서 LOW 받으면 대형 액추에이터 펼쳐진 것이 -> 접힌다.
-    // comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_2, S_MOTOR_CLOSE, read_data_list[DUMMYJUMP],1,1,1); p1++; // 캡슐의 중국 영상 끝나서 LOW 받으면 대형 액추에이터 펼쳐진 것이 -> 접힌다.
-/* 82 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_2, S_RELAY_ON, 1,1,1,1); p1++; // 강가 태양조명&강가 계단 조명 켜짐
-/* 83 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 2, 1,1,1,1); p1++;// bgm2 재생
-/* 84 */comwrite.com_sound_ch_raw(p1, 1, 0b00010000, 1,1,1,1); p1++;// 강가스피커를 켠다.
-/* 85 */comwrite.wait(p1, 5000); p1++;// 딜레이 5초 (액추에이터 기다리는 시간)
-    
-    
+                    //     // R   /   캡슐 2층 우측 IC3구 / HIGH뜨면 // 오류있음 : 뽑았다 끼웠다 해줘야 실행됨 LOW든 HIGH든
+                    // /* 48 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_OFF, read_data_list[10],1,1,1); p1++; // 캡슐 LED바 테마 입구에서 먼 쪽 1개 꺼짐.
+                    // /* 49 */comwrite.wait(p1, 20000); p1++; // 딜레이 20초
+                    // /* 50 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_ON, 1,1,1,1); p1++;// 캡슐 LED바 2개가 깜빡 깜빡 
+                    // /* 51 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_ON, 1,1,1,1); p1++;
+                    // /* 52 */comwrite.wait(p1, 1600);p1++;
+                    // /* 53 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_OFF, 1,1,1,1); p1++;
+                    // /* 54 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_OFF, 1,1,1,1); p1++;
+                    // /* 55 */comwrite.wait(p1, 1600);p1++;
+                    // /* 56 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_ON, 1,1,1,1); p1++;
+                    // /* 57 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_ON, 1,1,1,1); p1++;
+                    // /* 58 */comwrite.wait(p1, 1600);p1++;
+                    // /* 59 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_OFF, 1,1,1,1); p1++;
+                    // /* 60 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_OFF, 1,1,1,1); p1++;
+                    // /* 61 */comwrite.wait(p1, 1600);p1++;
+                    // /* 62 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_ON, 1,1,1,1); p1++;// 캡슐 LED바 2개가 깜빡 깜빡 
+                    // /* 63 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_ON, 1,1,1,1); p1++;
+                    // /* 64 */comwrite.wait(p1, 1600);p1++;
+                    // /* 65 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_OFF, 1,1,1,1); p1++;
+                    // /* 66 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_OFF, 1,1,1,1); p1++;
+                    // /* 67 */comwrite.wait(p1, 1600);p1++;
+                    // /* 68 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_ON, 1,1,1,1); p1++;
+                    // /* 69 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_ON, 1,1,1,1); p1++;
+                    // /* 70 */comwrite.wait(p1, 1600);p1++;
+                    // /* 71 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_OFF, 1,1,1,1); p1++;
+                    // /* 72 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_OFF, 1,1,1,1); p1++;
+                    // /* 73 */comwrite.wait(p1, 1600);p1++;
+                    // /* 74 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_ON, 1,1,1,1); p1++;
+                    // /* 75 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_ON, 1,1,1,1); p1++;
+                    // /* 76 */comwrite.wait(p1, 1600);p1++;
+                    // /* 77 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_3, S_RELAY_OFF, 1,1,1,1); p1++;
+                    // /* 78 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_4, S_RELAY_OFF, 1,1,1,1); p1++; 
+                    //     // 키패드 여기임
+                    //     ////// S  / 로비 비디오센서 2차가 신호를 주면 작동(문제없음)
+                    // /* 79 */comwrite.com_relay_raw(p1, 1, D_RELAY_SET_7, S_RELAY_OFF, read_data_list[0],1,1,1); p1++; // 2층 좌측 캡슐방의 서랍 em 열기
+                    //     // comwrite.com_relay_raw(p1, 1, D_RELAY_SET_7, S_RELAY_OFF, read_data_list[DUMMYJUMP],1,1,1); p1++; // 2층 좌측 캡슐방의 서랍 em 열기
+                    // /* 80 */comwrite.com_sound_ch_raw(p1, 1, 0b00000000, 1,1,1,1); p1++; //캡슐 BGM6번을 끄는 의미로 스피커를 전부 끈다. 
+                    //     // T   /   캡슐 2층 좌측 방에 있는 가정용 스위치 / ????
+                    // /* 81 */comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_2, S_MOTOR_CLOSE, read_data_list[12],1,1,1); p1++; // 캡슐의 중국 영상 끝나서 LOW 받으면 대형 액추에이터 펼쳐진 것이 -> 접힌다.
+                    //     // comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_2, S_MOTOR_CLOSE, read_data_list[DUMMYJUMP],1,1,1); p1++; // 캡슐의 중국 영상 끝나서 LOW 받으면 대형 액추에이터 펼쳐진 것이 -> 접힌다.
+                    // /* 82 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_2, S_RELAY_ON, 1,1,1,1); p1++; // 강가 태양조명&강가 계단 조명 켜짐
+                    // /* 83 */comwrite.com_sound(p1, 1, D_MUSIC_BGM + 2, 1,1,1,1); p1++;// bgm2 재생
+                    // /* 84 */comwrite.com_sound_ch_raw(p1, 1, 0b00010000, 1,1,1,1); p1++;// 강가스피커를 켠다.
+                    // /* 85 */comwrite.wait(p1, 5000); p1++;// 딜레이 5초 (액추에이터 기다리는 시간)
+                        
+                        
 
-    // U   /   강가 2층 벽면에 레버가 정답이 되고 영상이 플레이된 후 LOW가 뜨면
-    // comwrite.com_sound_ch_raw(p1, 1, 0b00000000, read_data_list[13],1,1,1); p1++;// 강가 스피커 BGM2꺼짐
-/* 86 */comwrite.com_sound_ch_raw(p1, 1, 0b00000000, read_data_list[DUMMYJUMP],1,1,1); p1++;// 강가 스피커 BGM2꺼짐
-/* 87 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_2, S_RELAY_OFF, 1,1,1,1); p1++; // 강가 태양조명&계단조명 꺼짐
+                    //     // U   /   강가 2층 벽면에 레버가 정답이 되고 영상이 플레이된 후 LOW가 뜨면
+                    //     // comwrite.com_sound_ch_raw(p1, 1, 0b00000000, read_data_list[13],1,1,1); p1++;// 강가 스피커 BGM2꺼짐
+                    // /* 86 */comwrite.com_sound_ch_raw(p1, 1, 0b00000000, read_data_list[DUMMYJUMP],1,1,1); p1++;// 강가 스피커 BGM2꺼짐
+                    // /* 87 */comwrite.com_relay_raw(p1, 2, D_RELAY_SET_2, S_RELAY_OFF, 1,1,1,1); p1++; // 강가 태양조명&계단조명 꺼짐
 
-    //END
-/* 88 */comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_2, S_MOTOR_OPEN, read_data_list[4],1,1,1); p1++;// 테마 입구 오른쪽 벽면에 있는 스위치로, 대형 액추에이터를 접는다
-/* 89 */comwrite.finish(p1, false);
+                    //     //END
+                    // /* 88 */comwrite.com_motor_raw(p1, 1, D_MOTOR_SET_2, S_MOTOR_OPEN, read_data_list[4],1,1,1); p1++;// 테마 입구 오른쪽 벽면에 있는 스위치로, 대형 액추에이터를 접는다
+                    // /* 89 */comwrite.finish(p1, false);
 
-    int p2 = 0;
-    com_1_th.com_motor_raw(p2, &comwrite.dev.motor_raw[1], D_MOTOR_SET_1, S_MOTOR_OPEN, read_data_list[4], 1,1,1); p2++;
+                    //     int p2 = 0;
+                    //     com_1_th.com_motor_raw(p2, &comwrite.dev.motor_raw[1], D_MOTOR_SET_1, S_MOTOR_OPEN, read_data_list[4], 1,1,1); p2++;
 
   //---------아래는 샘플코드---------------------------------
 
@@ -339,10 +347,12 @@ void read_schedule(){
 
     read_data_list[15] = get_input_Internal(GET_PORT_10, IN_LOW); // ([9]의 반대 골목좌측입구 스위치 닫힘상태
 
-    read_data_list[16] = get_esp32_req(G_ESP32_ISCA_1_REQUEST); // 상수는 내맴 (0~50)
+    // read_data_list[16] = get_esp32_req(1); // 상수는 내맴 (0~50)
+    // read_data_list[17] = get_esp32_req(2);
 
     /*무조건 뚫리는 더미인풋*/read_data_list[DUMMYJUMP] = get_input_Internal(GET_PORT_12, IN_LOW); //무조건 뚫리는 더미인풋
     /*무조건 막히는 더미인풋*/read_data_list[DUMMYSTUCK] = get_input_Internal(GET_PORT_12, IN_HIGH); //무조건 뚫리는 더미인풋
+
 
   //----------- 아래는 log 추적용
   // sprintf(str, "<in0> %d %d %d %d %d %d %d %d", read_data_list[0], read_data_list[1], read_data_list[2], read_data_list[3],
